@@ -1,0 +1,60 @@
+<PaintWidget>:
+    width: 360
+    height: 600
+
+<MainWidget>:
+    width: 360
+    height: 800
+    orientation: "vertical"
+
+    PaintWidget:
+        id: paint_widget
+        x: 0
+        y: 100
+
+    GridLayout:
+        width:360
+        cols: 1
+        rows: 2
+        background_color: 1,1,1,1
+        BoxLayout:
+            Label:
+                width: 90
+                text: "Цвет RGB"
+            
+            TextInput:
+                id: ti_color_red
+                width:90
+                height:100
+                text: "255"
+                on_text: root.on_text_changed_red(self.text)
+
+            TextInput:
+                id: ti_color_green
+                width: 90
+                height: 100
+                text: "255"
+                on_text: root.on_text_changed_green(self.text)
+            TextInput:
+                id: ti_color_blue
+                width:90
+                height:100
+                text: "255"
+                on_text: root.on_text_changed_blue(self.text)
+        BoxLayout:
+            Label:
+                text: "Толщина"
+                width: 90
+            Slider:
+                id: slider
+                width:180
+                min:5
+                value: 20
+                max:100
+            Button:
+                id: btn_clear
+                width:90
+                height:100
+                text: "Очистить"
+                on_press:
+                    paint_widget.canvas.clear()
