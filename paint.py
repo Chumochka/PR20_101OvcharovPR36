@@ -2,7 +2,7 @@ from random import random
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
-from kivy.graphics import Color, Ellipse, Line
+from kivy.graphics import Color, Ellipse, Line, Rectangle
 
 class PaintWidget(Widget):
 
@@ -11,17 +11,18 @@ class PaintWidget(Widget):
         green = int(self.parent.ids['ti_color_green'].text)/255
         blue = int(self.parent.ids['ti_color_blue'].text)/255
         slider = self.parent.ids['slider'].value
-        if (touch.y>100):
-            with self.canvas:
-                Color(red, green, blue,)
-                d = slider
-                Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
-                touch.ud['line'] = Line(points=(touch.x, touch.y), width = slider)
+        with self.canvas:
+            Color(red, green, blue)
+            d = slider
+            Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d*2, d*2))
+            touch.ud['line'] = Line(points=(touch.x, touch.y), width = d)
+        with self.canvas:
+            Color(0, 0, 0)
+            Rectangle(pos=(0,0), size=(360,100))
 
     def on_touch_move(self, touch):
         try:
-            if (touch.y>100):
-                touch.ud['line'].points += [touch.x, touch.y]
+            touch.ud['line'].points += [touch.x, touch.y]
         except(KeyError):
             pass
 
